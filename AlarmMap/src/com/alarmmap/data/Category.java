@@ -16,7 +16,7 @@ public class Category implements Configurable {
 	public void setRange(double range)
 	{ this.range = range; }
 	/** Makes the point 'inherit' the range from its category. */
-	public void unsetRange()
+	public void resetRange()
 	{ range = -1; }
 	
 	/** The identifier for the ringtone. If "", doesn't ring. If null, uses the category's. */
@@ -28,7 +28,7 @@ public class Category implements Configurable {
 	public void setRingtoneUri(String ringtoneUri)
 	{ this.ringtoneUri = ringtoneUri; }
 	/** Makes the point 'inherit' the ringtone from its category. */
-	public void unsetRingtoneUri()
+	public void resetRingtoneUri()
 	{ ringtoneUri = null; }
 	
 	
@@ -39,7 +39,7 @@ public class Category implements Configurable {
 	public void setVibration(boolean vibrate)
 	{ this.vibrate = vibrate; }
 	/** Makes the point 'inherit' the vibration from its category. */
-	public void unsetVibration()
+	public void resetVibration()
 	{ this.vibrate = null; }
 	
 	/** The message displayed with the alarm. If "", doesn't display any message. If null, uses the global. */
@@ -51,7 +51,7 @@ public class Category implements Configurable {
 	public void setMessage(String message)
 	{ this.message = message; }
 	/** Makes the point 'inherit' the message from its category. */
-	public void unsetMessage()
+	public void resetMessage()
 	{ this.message = null; }
 	
 	/**  The first hour/minute of a day when the alarm may be triggered.
@@ -68,7 +68,7 @@ public class Category implements Configurable {
 	public void setBeginTime(int hour, int min)
 	{ this.beginH = hour; this.beginM = min; }
 	/** Makes the point 'inherit' the vibration from its category. */
-	public void unsetBeginTime()
+	public void resetBeginTime()
 	{ this.beginH = -1; this.beginM = -1; }
 	
 	/** The last hour/minute of a day when the alarm may be triggered.
@@ -87,7 +87,7 @@ public class Category implements Configurable {
 	public void setEndTime(int hour, int min)
 	{ this.endH = hour; this.endM = min; }
 	/** Makes the point 'inherit' the vibration from its category. */
-	public void unsetEndTime()
+	public void resetEndTime()
 	{ this.endH = -1; this.endM = -1; }
 	
 	/** If true, uses the schedule settings. If false, uses the global. */
@@ -135,4 +135,8 @@ public class Category implements Configurable {
 	{ return saturday; }
 	public void setOnSaturday(boolean saturday) 
 	{ this.saturday = saturday; }
+	public void resetFullConfig() {
+	}
+	public void resetDaysOfWeek() {
+	}
 }

@@ -23,23 +23,18 @@ public class PointOfInterest implements Configurable {
 	public int getId() {
 		return id;
 	}
-
 	public double getLat() {
 		return lat;
 	}
-
 	public double getLon() {
 		return lon;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public String getCategoryName() {
 		return categoryName;
 	}
-
 	public Category getCategory() {
 		return categoryDB.findByName(categoryName);
 	}
@@ -47,57 +42,36 @@ public class PointOfInterest implements Configurable {
 	/*
 	 * Fields for the read-write setting properties
 	 */
-
-	/**
-	 * The distance from which the alarm may be triggered. If negative, uses the
-	 * category's.
-	 */
+	/** The distance from which the alarm may be triggered.
+	 * If negative, uses the category's. */
 	private double range;
-
 	/** If null, uses the category's */
 	private Boolean vibrate;
-
-	/**
-	 * The identifier for the ringtone. If "", doesn't ring. If null, uses the
-	 * category's.
-	 */
+	/** The identifier for the ringtone.
+	 * If "", doesn't ring.
+	 * If null, uses the category's. */
 	private String ringtoneUri;
-
-	/**
-	 * The message displayed with the alarm. If "", doesn't display any message.
-	 * If null, uses the category's.
-	 */
+	/** The message displayed with the alarm.
+	 * If "", doesn't display any message.
+	 * If null, uses the category's. */
 	private String message;
-
-	/**
-	 * The first hour/minute of a day when the alarm may be triggered.
-	 *  0:0 is the first time of the day.
-	 *  If negative, uses the category's.
-	 *  Must be either both negative or both positive.
-	 *  Must be sooner than endH:endM.
-	 */
+	/** The first hour/minute of a day when the alarm may be triggered.
+	 * 0:0 is the first time of the day.
+	 * If negative, uses the category's.
+	 * Must be either both negative or both positive.
+	 * Must be sooner than endH:endM. */
 	private int beginH, beginM;
-
-	/**
-	 * The last hour/minute of a day when the alarm may be triggered. 
-	 *  23:60 indicates the end of the day.
-	 *  If negative, uses the category's.
-	 *  Must be either both negative or both positive.
-	 *  Must be later than beginH:beginM.
-	 */
+	/** The last hour/minute of a day when the alarm may be triggered. 
+	 * 24:00 indicates the end of the day.
+	 * If negative, uses the category's.
+	 * Must be either both negative or both positive.
+	 * Must be later than beginH:beginM. */
 	private int endH, endM;
-
-	/**
-	 * If true, uses our own daily schedule settings. If false, uses the
-	 * category's.
-	 */
+	/** If true, uses our own daily schedule settings.
+	 * If false, uses the category's. */
 	private boolean useSchedule;
-
-	/**
-	 * If true, the alarm may be triggered during this day of week. If false, it
-	 * won't. Ignored when {@link com.alarmmap.data.PointOfInterest#useSchedule} is
-	 * false.
-	 */
+	/** If true, the alarm may be triggered during this day of week. If false, it won't.
+	 * Ignored when {@link com.alarmmap.data.PointOfInterest#useSchedule} is false. */
 	private boolean sunday, monday, tuesday, wednesday, thursday, friday,
 			saturday;
 
@@ -126,16 +100,13 @@ public class PointOfInterest implements Configurable {
 	public double getRange() {
 		return (range < 0) ? getCategory().getRange() : range;
 	}
-
 	public String getRingtoneUri() {
 		return (ringtoneUri == null) ? getCategory().getRingtoneUri()
 				: ringtoneUri;
 	}
-
 	public boolean willVibrate() {
 		return (vibrate == null) ? getCategory().willVibrate() : vibrate;
 	}
-
 	public String getMessage() {
 		return (message == null) ? getCategory().getMessage() : message;
 	}
@@ -143,15 +114,12 @@ public class PointOfInterest implements Configurable {
 	public int getBeginHour() {
 		return beginH < 0 ? getCategory().getBeginHour() : beginH;
 	}
-
 	public int getBeginMinute() {
 		return beginM < 0 ? getCategory().getBeginMinute() : beginM;
 	}
-
 	public int getEndHour() {
 		return endH < 0 ? getCategory().getEndHour() : endH;
 	}
-
 	public int getEndMinute() {
 		return endM < 0 ? getCategory().getEndMinute() : endM;
 	}
@@ -160,51 +128,24 @@ public class PointOfInterest implements Configurable {
 		return useSchedule;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnSunday()
-	 */
 	public boolean isOnSunday() {
 		return useSchedule ? sunday : getCategory().isOnSunday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnMonday()
-	 */
 	public boolean isOnMonday() {
 		return useSchedule ? monday : getCategory().isOnMonday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnTuesday()
-	 */
 	public boolean isOnTuesday() {
 		return useSchedule ? tuesday : getCategory().isOnTuesday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnWednesday()
-	 */
 	public boolean isOnWednesday() {
 		return useSchedule ? wednesday : getCategory().isOnWednesday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnThursday()
-	 */
 	public boolean isOnThursday() {
 		return useSchedule ? thursday : getCategory().isOnThursday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnFriday()
-	 */
 	public boolean isOnFriday() {
 		return useSchedule ? friday : getCategory().isOnFriday();
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#isOnSaturday()
-	 */
 	public boolean isOnSaturday() {
 		return useSchedule ? saturday : getCategory().isOnSaturday();
 	}
@@ -215,44 +156,26 @@ public class PointOfInterest implements Configurable {
 	 * Argument restrictions are defined per method
 	 */
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setRange(double)
-	 */
 	public void setRange(double range) throws IllegalArgumentException {
 		if (range < 0)
 			throw new IllegalArgumentException("Cannot use a negative range.");
 		
 		this.range = range;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setRingtoneUri(java.lang.String)
-	 */
 	public void setRingtoneUri(String ringtoneUri) throws IllegalArgumentException {
 		if (ringtoneUri == null)
 			throw new IllegalArgumentException("Cannot use a null ringtone URI.");
 		this.ringtoneUri = ringtoneUri;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setVibration(boolean)
-	 */
 	public void setVibration(boolean vibrate) {
 		this.vibrate = vibrate;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setMessage(java.lang.String)
-	 */
 	public void setMessage(String message) throws IllegalArgumentException {
 		if (message == null)
 			throw new IllegalArgumentException("Cannot use a null message.");
 		this.message = message;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setBeginTime(int, int)
-	 */
 	public void setBeginTime(int hour, int min) throws IllegalArgumentException, ReversedTimesException {
 		if (hour < 0 || min < 0)
 			throw new IllegalArgumentException("Cannot use negative times.");
@@ -261,10 +184,6 @@ public class PointOfInterest implements Configurable {
 		this.beginH = hour;
 		this.beginM = min;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setEndTime(int, int)
-	 */
 	public void setEndTime(int hour, int min) throws IllegalArgumentException {
 		if (hour < 0 || min < 0)
 			throw new IllegalArgumentException("Cannot use negative times.");
@@ -274,64 +193,34 @@ public class PointOfInterest implements Configurable {
 		this.endM = min;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#useOwnSchedule(boolean)
-	 */
 	public void useOwnSchedule(boolean useSchedule) {
 		this.useSchedule = useSchedule;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnSunday(boolean)
-	 */
+	
 	public void setOnSunday(boolean active) {
 		useSchedule = true;
 		sunday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnMonday(boolean)
-	 */
 	public void setOnMonday(boolean active) {
 		useSchedule = true;
 		monday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnTuesday(boolean)
-	 */
 	public void setOnTuesday(boolean active) {
 		useSchedule = true;
 		tuesday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnWednesday(boolean)
-	 */
 	public void setOnWednesday(boolean active) {
 		useSchedule = true;
 		wednesday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnThursday(boolean)
-	 */
 	public void setOnThursday(boolean active) {
 		useSchedule = true;
 		thursday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnFriday(boolean)
-	 */
 	public void setOnFriday(boolean active) {
 		useSchedule = true;
 		friday = active;
 	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#setOnSaturday(boolean)
-	 */
 	public void setOnSaturday(boolean active) {
 		useSchedule = true;
 		saturday = active;
@@ -343,50 +232,46 @@ public class PointOfInterest implements Configurable {
 	 * Leaves the value for looking at the configuration
 	 */
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetRange()
-	 */
-	public void unsetRange() {
-		range = -1;
+	public void resetRange() {
+		range = defaultRange;
+	}
+	public void resetVibration() {
+		this.vibrate = defaultVibration;
+	}
+	public void resetRingtoneUri() {
+		ringtoneUri = defaultRingtoneUri;
+	}
+	public void resetMessage() {
+		this.message = defaultMessage;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetVibration()
-	 */
-	public void unsetVibration() {
-		this.vibrate = null;
+	public void resetBeginTime() {
+		this.beginH = defaultBeginH;
+		this.beginM = defaultBeginM;
+	}
+	public void resetEndTime() {
+		this.endH = defaultEndH;
+		this.endM = defaultEndM;
+	}
+	
+	public void resetDaysOfWeek() {
+		useOwnSchedule(false);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetRingtoneUri()
-	 */
-	public void unsetRingtoneUri() {
-		ringtoneUri = null;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetMessage()
-	 */
-	public void unsetMessage() {
-		this.message = null;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetBeginTime()
-	 */
-	public void unsetBeginTime() {
-		this.beginH = -1;
-		this.beginM = -1;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.alarmmap.data.Configurable#unsetEndTime()
-	 */
-	public void unsetEndTime() {
-		this.endH = -1;
-		this.endM = -1;
-	}
-
+	public void resetFullConfig() {
+		
+		resetRange();
+		resetVibration();
+		resetRingtoneUri();
+		resetMessage();
+		
+		resetBeginTime();
+		resetEndTime();
+		
+		resetDaysOfWeek();
+		
+	}	
+	
 	/**
 	 * @param id
 	 *            a numeric ID for/from the database
@@ -431,4 +316,14 @@ public class PointOfInterest implements Configurable {
 		saturday  = defaultOnDayOfWeek;
 	}
 
+	public void finalize() {
+		saveOnDB();
+	}
+	
+	/**
+	 * Saves the POI on the DB.
+	 * TODO implement, really
+	 */
+	public void saveOnDB() { }
+	
 }
