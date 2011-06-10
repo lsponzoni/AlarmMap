@@ -366,19 +366,19 @@ public class PointOfInterestTest extends TestCase {
 		// Correct default values on 'reset'
 		POI.useOwnSchedule(true);
 		assertEquals("Must obtain default 'sunday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnSunday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnSunday());
 		assertEquals("Must obtain default 'monday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnMonday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnMonday());
 		assertEquals("Must obtain default 'tuesday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnTuesday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnTuesday());
 		assertEquals("Must obtain default 'wednesday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnWednesday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnWednesday());
 		assertEquals("Must obtain default 'thursday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnThursday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnThursday());
 		assertEquals("Must obtain default 'friday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnFriday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnFriday());
 		assertEquals("Must obtain default 'saturday' after resetting.",
-				POI.defaultOnDayOfWeek, POI.isOnSaturday());
+				PointOfInterest.defaultOnDayOfWeek, POI.isOnSaturday());
 		
 		// Correct setting of values (which activates useOnSchedule)
 		Category categ = POI.getCategory();
