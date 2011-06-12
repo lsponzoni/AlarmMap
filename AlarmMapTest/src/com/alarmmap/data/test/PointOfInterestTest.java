@@ -12,9 +12,9 @@ public class PointOfInterestTest extends TestCase {
 	/*
 	 * Some values used on the tests
 	 */
-	private static final int id0 = 0;
+	private static final int id0 = 0, categ0 = 1;
 	private static final double lat0 = 0, lon0 = 0;
-	private static final String name0 = "center!", categ0 = "aCategory!";
+	private static final String name0 = "center!";
 
 	private static final double range = 42.0;
 	private static final String ringtone = "just://a.ringtone";
@@ -42,13 +42,15 @@ public class PointOfInterestTest extends TestCase {
 	 */
 	private class MockCategory extends Category {	
 		public MockCategory() {
+			super(categ0, "aCategory");
+			
 			setRange(catRange);
 			setRingtoneUri(catRingtone);
 			setVibration(catVibrate);
 			setMessage(catMessage);
-			
-			setBeginTime(catBeginH, catBeginM);
+
 			setEndTime(catEndH, catEndM);
+			setBeginTime(catBeginH, catBeginM);
 			
 			setOnSunday(catOnDayOfWeek);
 			setOnMonday(catOnDayOfWeek);
@@ -74,7 +76,7 @@ public class PointOfInterestTest extends TestCase {
 		}
 		
 		@Override
-		public Category findByName(String name) {
+		public Category findById(int id) {
 			return categ;
 		}
 		
@@ -107,7 +109,7 @@ public class PointOfInterestTest extends TestCase {
 		assertEquals("The retrieved lat was wrong.", lat0, POI.getLat());
 		assertEquals("The retrieved lat was wrong.", lon0, POI.getLon());
 		assertEquals("The retrieved name was wrong.", name0, POI.getName());
-		assertEquals("The retrieved category name was wrong.", categ0, POI.getCategoryName());
+		assertEquals("The retrieved category name was wrong.", categ0, POI.getCategoryId());
 		
 	}
 	
@@ -120,21 +122,32 @@ public class PointOfInterestTest extends TestCase {
 	 * Must not set an invalid value.
 	 */
 	public void testRangeInitial() {
-		assertEquals("Must obtain correct initial range from the category.", catRange, POI.getRange());
+		
+		assertEquals("Must obtain correct initial range from the category.",
+				catRange, POI.getRange());
+		
 	}
 	public void testRangeSet() {
+		
 		try {
 			POI.setRange(range);
 			assertEquals("Must retrieve the exact range just set.", range, POI.getRange());
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			fail("Must accept non-negative ranges.");
 		}
+		
 	}
 	public void testRangeReset() {
 		
 		POI.setRange(range);
 		POI.resetRange();
-		assertEquals("Must retrieve the range from category after unsetting it.", catRange, POI.getRange());
+		
+		assertEquals("Must retrieve the range from category after unsetting it.", 
+				catRange, POI.getRange());
+		
+	}
+	public void testRangeRejectNegative() {
 		
 		try {
 			POI.setRange(-1);
@@ -156,9 +169,12 @@ public class PointOfInterestTest extends TestCase {
 				catVibrate, POI.willVibrate());
 	}
 	public void testVibrationSet() {
+		
 		POI.setVibration(vibrate);
+		
 		assertEquals("Must retrieve the exact vibration just set.", 
 				vibrate, POI.willVibrate());
+		
 	}
 	public void testVibrationReset() {
 		
@@ -179,17 +195,22 @@ public class PointOfInterestTest extends TestCase {
 	 * Must not set an invalid value.
 	 */
 	public void testRingtoneUriInitial() {
+		
 		assertEquals("Must obtain correct initial ringtone from the category.",
-				catRingtone, POI.getRingtoneUri());	
+				catRingtone, POI.getRingtoneUri());
+		
 	}
 	public void testRingtoneUriSet() {
+		
 		try {
 			POI.setRingtoneUri(ringtone);
 			assertEquals("Must retrieve the exact ringtone just set.", 
 					ringtone, POI.getRingtoneUri());
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			fail("Must accept all non-null ringtone URIs.");
 		}
+		
 	}
 	public void testRingtoneUriReset() {
 		
@@ -201,10 +222,12 @@ public class PointOfInterestTest extends TestCase {
 		
 	}
 	public void testRingtoneUriRejectNull() {
+		
 		try {
 			POI.setRingtoneUri(null);
 			fail("Must reject a null ringtone URI.");
 		} catch (IllegalArgumentException e) { }
+		
 	}
 
 	/*
@@ -215,18 +238,23 @@ public class PointOfInterestTest extends TestCase {
 	 * Must properly unset the value;
 	 * Must not set an invalid value.
 	 */
-	public void testMessageInitial() {		
+	public void testMessageInitial() {
+		
 		assertEquals("Must obtain correct initial message from the category.",
 				catMessage, POI.getMessage());
+		
 	}
 	public void testMessageSet() {
+		
 		try {
 			POI.setMessage(message);
 			assertEquals("Must retrieve the exact message just set.", 
 					message, POI.getMessage());
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e) {
 			fail("Must accept all non-null messages.");
 		}
+		
 	}
 	public void testMessageReset() {
 		
@@ -238,10 +266,12 @@ public class PointOfInterestTest extends TestCase {
 		
 	}
 	public void testMessageRejectNull() {
+		
 		try {
 			POI.setMessage(null);
 			fail("Must reject a null message.");
 		} catch (IllegalArgumentException e) { }
+		
 	}
 	
 	/*
@@ -254,16 +284,20 @@ public class PointOfInterestTest extends TestCase {
 	 * Must work with boundary times.
 	 */
 	public void testBeginTimeInitial() {
+		
 		assertEquals("Must obtain correct initial beginH from the category.",
 				catBeginH, POI.getBeginHour());
 		assertEquals("Must obtain correct initial beginM from the category.",
 				catBeginM, POI.getBeginMinute());
+		
 	}
 	public void testEndTimeInitial() {
+		
 		assertEquals("Must obtain correct initial endH from the category.",
 				catEndH, POI.getEndHour());
 		assertEquals("Must obtain correct initial endM from the category.",
 				catEndM, POI.getEndMinute());
+		
 	}
 	
 	public void testBeginTimeSet() {
@@ -317,23 +351,17 @@ public class PointOfInterestTest extends TestCase {
 		try {
 			POI.setBeginTime(safeH, -1);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 		try {
 			POI.setBeginTime(-1, safeM);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 		try {
 			POI.setBeginTime(-1, -1);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 	}
 	public void testEndTimeRejectNegative() {
@@ -341,23 +369,17 @@ public class PointOfInterestTest extends TestCase {
 		try {
 			POI.setEndTime(safeH, -1);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 		try {
 			POI.setEndTime(-1, safeM);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 		try {
 			POI.setEndTime(-1, -1);
 			fail("Must reject negative times.");
-		} catch (IllegalArgumentException e) { 
-			// If had exception: worked!
-		}
+		} catch (IllegalArgumentException e) { }
 		
 	}
 	
@@ -365,44 +387,36 @@ public class PointOfInterestTest extends TestCase {
 		try {
 			POI.setBeginTime(POI.getEndHour()+1, POI.getEndMinute());
 			fail("Must reject reversed begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
 
 		try {
 			POI.setBeginTime(POI.getEndHour(), POI.getEndMinute()+1);
 			fail("Must reject reversed begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
+		
 		try {
 			POI.setBeginTime(POI.getEndHour(), POI.getEndMinute());
 			fail("Must reject equal begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
+		
 	}
 	public void testEndTimeRejectReversed() {
+		
 		try {
 			POI.setEndTime(POI.getBeginHour()-1, POI.getBeginMinute());
 			fail("Must reject reversed begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
 
 		try {
 			POI.setEndTime(POI.getBeginHour(), POI.getBeginMinute()-1);
 			fail("Must reject reversed begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
 		
 		try {
 			POI.setEndTime(POI.getBeginHour(), POI.getBeginMinute());
 			fail("Must reject equal begin/end times.");
-		} catch (ReversedTimesException e) {
-			// If had exception: worked!
-		}
+		} catch (ReversedTimesException e) { }
+		
 	}
 	
 	public void testBeginTimeBoundaryCases() {
@@ -419,7 +433,7 @@ public class PointOfInterestTest extends TestCase {
 	 * Must have correct default values when using our own schedule;
 	 * Must properly set the values;
 	 * Must not reset the values when not using our own schedule;
-	 * Must properly reset the values.
+	 * Resetting must mean not using own schedule.
 	 */
 	public void testDaysOfWeekInitial() {
 		
@@ -544,6 +558,8 @@ public class PointOfInterestTest extends TestCase {
 				onDayOfWeek, POI.isOnSaturday());
 	}
 	public void testDaysOfWeekResetToCategory() {
+		
+		// Makes sure category is different from the POI
 		Category categ = POI.getCategory();
 		categ.setOnSunday(!onDayOfWeek);
 		categ.setOnMonday(!onDayOfWeek);
@@ -579,6 +595,40 @@ public class PointOfInterestTest extends TestCase {
 				categ.isOnSaturday(), POI.isOnSaturday());
 	}
 	public void testDaysOfWeekResetValues() {
-		// TODO make tests
+		
+		// Makes sure category is different from the POI
+		Category categ = POI.getCategory();
+		categ.setOnSunday(!onDayOfWeek);
+		categ.setOnMonday(!onDayOfWeek);
+		categ.setOnTuesday(!onDayOfWeek);
+		categ.setOnWednesday(!onDayOfWeek);
+		categ.setOnThursday(!onDayOfWeek);
+		categ.setOnFriday(!onDayOfWeek);
+		categ.setOnSaturday(!onDayOfWeek);
+		
+		POI.setOnSunday(onDayOfWeek);
+		POI.setOnMonday(onDayOfWeek);
+		POI.setOnTuesday(onDayOfWeek);
+		POI.setOnWednesday(onDayOfWeek);
+		POI.setOnThursday(onDayOfWeek);
+		POI.setOnFriday(onDayOfWeek);
+		POI.setOnSaturday(onDayOfWeek);
+		
+		POI.resetDaysOfWeek();
+		
+		assertEquals("Must obtain correct 'sunday' after resetting days of week.",
+				categ.isOnSunday(), POI.isOnSunday());
+		assertEquals("Must obtain correct 'monday' after resetting days of week.",
+				categ.isOnMonday(), POI.isOnMonday());
+		assertEquals("Must obtain correct 'tuesday' after resetting days of week.",
+				categ.isOnTuesday(), POI.isOnTuesday());
+		assertEquals("Must obtain correct 'wednesday' after resetting days of week.",
+				categ.isOnWednesday(), POI.isOnWednesday());
+		assertEquals("Must obtain correct 'thursday' after resetting days of week.",
+				categ.isOnThursday(), POI.isOnThursday());
+		assertEquals("Must obtain correct 'friday' after resetting days of week.",
+				categ.isOnFriday(), POI.isOnFriday());
+		assertEquals("Must obtain correct 'saturday' after resetting days of week.",
+				categ.isOnSaturday(), POI.isOnSaturday());
 	}
 }

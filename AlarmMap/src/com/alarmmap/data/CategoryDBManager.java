@@ -10,10 +10,10 @@ package com.alarmmap.data;
 public class CategoryDBManager {
 
 	/**
-	 * @param name The desired category's name
-	 * @return The category on the DB with the given name or null
+	 * @param id The desired category's id
+	 * @return The category on the DB with the given id or null
 	 */
-	public Category findByName(String name) { 
+	public Category findById(int id) { 
 		return null;
 	}
 }

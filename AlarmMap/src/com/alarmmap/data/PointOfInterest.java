@@ -10,15 +10,15 @@ public class PointOfInterest implements Configurable {
 	private CategoryDBManager categoryDB;
 
 	/*
-	 * Fields for read-only properties
+	 * Fields for the point's properties
 	 */
 	private int id;
 	private double lat, lon;
 	private String name;
-	private String categoryName;
+	private int categoryId;
 
 	/*
-	 * Getters for read-only properties
+	 * Getters/Setters for the point's properties
 	 */
 	public int getId() {
 		return id;
@@ -32,13 +32,17 @@ public class PointOfInterest implements Configurable {
 	public String getName() {
 		return name;
 	}
-	public String getCategoryName() {
-		return categoryName;
+	
+	public int getCategoryId() {
+		return categoryId;
 	}
 	public Category getCategory() {
-		return categoryDB.findByName(categoryName);
+		return categoryDB.findById(categoryId);
 	}
-
+	public void setCategory(Category categ) { /* TODO implement (gets the id, checks any constraints) */ }
+	public void setCategory(int id) { /* TODO implement (checks constraints) */ }
+	public void setCategory(String name) { /* TODO implement (looks up on DB, checks any constraints) */ }
+	
 	/*
 	 * Fields for the read-write setting properties
 	 */
@@ -253,7 +257,8 @@ public class PointOfInterest implements Configurable {
 		this.endH = defaultEndH;
 		this.endM = defaultEndM;
 	}
-	
+
+	/** Semantics vary. Here: same as useOwnSchedule(false). */
 	public void resetDaysOfWeek() {
 		useOwnSchedule(false);
 	}
@@ -281,39 +286,22 @@ public class PointOfInterest implements Configurable {
 	 *            the longitude
 	 * @param name
 	 *            a textual name for the user
-	 * @param categoryName
+	 * @param categoryId
 	 *            the string identifier for the POI's category
 	 */
 	public PointOfInterest(int id, double lat, double lon, String name,
-			String categoryName, CategoryDBManager categoryDB) {
+			int categoryId, CategoryDBManager categoryDB) {
 
 		// Initializes the given parameters
 		this.id = id;
 		this.lat = lat;
 		this.lon = lon;
 		this.name = name;
-		this.categoryName = categoryName;
+		this.categoryId = categoryId;
 		this.categoryDB = categoryDB;
 
-		// Initializes the configuration properties
-		range = defaultRange;
-		ringtoneUri = defaultRingtoneUri;
-		message = defaultMessage;
-		vibrate = defaultVibration;
-
-		beginH = defaultBeginH;
-		beginM = defaultBeginM;
-		endH   = defaultEndH;
-		endM   = defaultEndM;
-
-		useSchedule = defaultUseSchedule;
-		sunday    = defaultOnDayOfWeek;
-		monday    = defaultOnDayOfWeek;
-		tuesday   = defaultOnDayOfWeek;
-		wednesday = defaultOnDayOfWeek;
-		thursday  = defaultOnDayOfWeek;
-		friday    = defaultOnDayOfWeek;
-		saturday  = defaultOnDayOfWeek;
+		resetFullConfig();
+		
 	}
 
 	public void finalize() {

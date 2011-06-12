@@ -122,8 +122,10 @@ public interface Configurable {
 	public abstract void resetBeginTime();
 	public abstract void resetEndTime();
 
+	/** Semantics vary. */
 	public void resetDaysOfWeek();
 
+	/** Resets all config options. Same as calling all individual resetters. */ 
 	public void resetFullConfig();
 
 }
