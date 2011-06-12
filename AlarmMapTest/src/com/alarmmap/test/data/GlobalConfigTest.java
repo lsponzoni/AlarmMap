@@ -1,4 +1,4 @@
-package com.alarmmap.data.test;
+package com.alarmmap.test.data;
 
 import junit.framework.TestCase;
 

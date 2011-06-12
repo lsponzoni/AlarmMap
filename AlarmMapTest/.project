@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>AlarmMapTest</name>
+	<name>com.alarmmap.test</name>
 	<comment></comment>
 	<projects>
 		<project>AlarmMap</project>
