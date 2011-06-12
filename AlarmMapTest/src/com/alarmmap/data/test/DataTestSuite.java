@@ -10,6 +10,7 @@ public class DataTestSuite {
 		
 		//$JUnit-BEGIN$
 		suite.addTestSuite(GlobalConfigTest.class);
+		suite.addTestSuite(CategoryTest.class);
 		suite.addTestSuite(PointOfInterestTest.class);
 		//$JUnit-END$
 		

@@ -11,7 +11,7 @@ public class GlobalConfig implements Configurable {
 	 *  Singleton methods/fields
 	 */
 	
-	private GlobalConfig() {
+	protected GlobalConfig() {
 		load();
 	}
 	protected void finalize() {
@@ -152,7 +152,6 @@ public class GlobalConfig implements Configurable {
 		beginH = hour;
 		beginM = min;
 	}
-
 	public void setEndTime(int hour, int min) throws IllegalArgumentException,
 			ReversedTimesException {
 		
@@ -169,7 +168,6 @@ public class GlobalConfig implements Configurable {
 		endH = hour;
 		endM = min;
 	}
-
 	
 	public void setMessage(String message) throws IllegalArgumentException {
 		if (message == null)
@@ -177,7 +175,6 @@ public class GlobalConfig implements Configurable {
 
 		this.message = message;
 	}
-
 	public void setRange(double range) throws IllegalArgumentException {
 		if (range < 0)
 			throw new IllegalArgumentException("Cannot use a negative range.");
@@ -198,27 +195,21 @@ public class GlobalConfig implements Configurable {
 	public void setOnFriday(boolean active) {
 		friday = active;
 	}
-
 	public void setOnMonday(boolean active) {
 		monday = active;
 	}
-
 	public void setOnSaturday(boolean active) {
 		saturday = active;
 	}
-
 	public void setOnSunday(boolean active) {
 		sunday = active;
 	}
-
 	public void setOnThursday(boolean active) {
 		thursday = active;
 	}
-
 	public void setOnTuesday(boolean active) {
 		tuesday = active;
 	}
-
 	public void setOnWednesday(boolean active) {
 		wednesday = active;
 	}
@@ -233,32 +224,27 @@ public class GlobalConfig implements Configurable {
 		beginH = defaultBeginH;
 		beginM = defaultBeginM;
 	}
-
 	public void resetEndTime() {
 		endH = defaultEndH;
 		endM = defaultEndM;
 	}
 
-	
 	public void resetMessage() {
 		message = defaultMessage;
 	}
-
 	public void resetRange() {
 		range = defaultRange;
 	}
-
 	public void resetRingtoneUri() {
 		ringtoneUri = defaultRingtoneUri;
 	}
-
 	public void resetVibration() {
 		vibrate = defaultVibration;
 	}
 
-
-
+	/** Semantics vary. Here: sets all days to the default value. */
 	public void resetDaysOfWeek() {
+		
 		sunday = defaultOnDayOfWeek;
 		monday = defaultOnDayOfWeek;
 		tuesday = defaultOnDayOfWeek;
@@ -266,6 +252,7 @@ public class GlobalConfig implements Configurable {
 		thursday = defaultOnDayOfWeek;
 		friday = defaultOnDayOfWeek;
 		saturday = defaultOnDayOfWeek;
+		
 	}
 	
 	public void resetFullConfig() {
